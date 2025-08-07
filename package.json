@@ -1,0 +1,26 @@
+{
+  "name": "nao-connector",
+  "version": "1.0.0",
+  "description": "Used to log data to NAO by Naotilus",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kazomotos/nao-logger-js.git"
+  },
+  "author": "Marc Hager",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kazomotos/nao-logger-js/issues"
+  },
+  "homepage": "https://github.com/kazomotos/nao-logger-js#readme",
+  "dependencies": {
+    "axios": "^1.11.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}
