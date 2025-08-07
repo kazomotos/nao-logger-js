@@ -36,17 +36,26 @@ class NaoConnector {
             throw new Error(`Login failed: ${err.message}`);
         }
     }
-    async request(method, url, data, config) {
+    async request(method, url, data, config = {}) {
         if (!this.token) {
             await this.login();
         }
         try {
-            const response = await this.client.request({
+            const requestConfig = {
                 method,
                 url,
-                data,
                 ...config,
-            });
+                headers: {
+                    ...(config.headers || {}),
+                    Authorization: `Bearer ${this.token}`,
+                    "Content-Type": "application/json", // oder text/plain je nach Route
+                },
+            };
+            // Nur bei POST, PATCH, DELETE → Body übergeben
+            if (method !== "get" && data !== undefined) {
+                requestConfig.data = data;
+            }
+            const response = await this.client.request(requestConfig);
             this.retries = 0;
             return response.data;
         }

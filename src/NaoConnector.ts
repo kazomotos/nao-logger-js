@@ -42,20 +42,30 @@ export class NaoConnector {
     method: "get" | "post" | "patch" | "delete",
     url: string,
     data?: any,
-    config?: AxiosRequestConfig
+    config: AxiosRequestConfig = {}
   ): Promise<T | null> {
     if (!this.token) {
       await this.login();
     }
 
     try {
-      const response = await this.client.request<T>({
+      const requestConfig: AxiosRequestConfig = {
         method,
         url,
-        data,
         ...config,
-      });
+        headers: {
+          ...(config.headers || {}),
+          Authorization: `Bearer ${this.token}`,
+          "Content-Type": "application/json", // oder text/plain je nach Route
+        },
+      };
 
+      // Nur bei POST, PATCH, DELETE → Body übergeben
+      if (method !== "get" && data !== undefined) {
+        requestConfig.data = data;
+      }
+
+      const response = await this.client.request<T>(requestConfig);
       this.retries = 0;
       return response.data;
     } catch (err: any) {

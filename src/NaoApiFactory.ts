@@ -22,13 +22,13 @@ export class NaoApiFactory {
     this.instances = this.integrator.getApi<{
       name: string;
       description?: string;
-    }>("/api/instance");
+    }>("/api/nao/instance");
     this.assets = this.integrator.getApi<{
       name: string;
       type: string;
-    }>("/api/asset");
+    }>("/api/nao/asset");
     this.workspaces = this.integrator.getApi<{ name: string; assetId: string }>(
-      "/api/workspace"
+      "/api/nao/workspace"
     );
     this.influx = new NaoInfluxWriter(this.connector);
   }

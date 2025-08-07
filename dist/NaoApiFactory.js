@@ -10,9 +10,9 @@ class NaoApiFactory {
         this.init();
     }
     init() {
-        this.instances = this.integrator.getApi("/api/instance");
-        this.assets = this.integrator.getApi("/api/asset");
-        this.workspaces = this.integrator.getApi("/api/workspace");
+        this.instances = this.integrator.getApi("/api/nao/instance");
+        this.assets = this.integrator.getApi("/api/nao/asset");
+        this.workspaces = this.integrator.getApi("/api/nao/workspace");
         this.influx = new NaoInfluxWriter_1.NaoInfluxWriter(this.connector);
     }
 }
